@@ -13,14 +13,26 @@ app.use(cors());
 
 // Database Connection With MongoDB
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log("MongoDB connection error:", err));
 
 // API Creation
+app.get("/", (req, res) => {
+  res.send("Express App is Running");
+});
+
+// Image Storage Engine
+
+const storage = multer.diskStorage({
+  destination: "./upload/images",
+  filename: (req, file, cb) => {
+    return cb(
+      null,
+      `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`
+    );
+  },
+});
 
 app.listen(port, (error) => {
   if (!error) {
