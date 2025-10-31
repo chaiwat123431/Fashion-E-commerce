@@ -22,7 +22,7 @@ const AddProduct = () => {
     const Add_Product = async ()=>{
         console.log(productDetails);
         let responseData;
-        let product = productDetails;
+        let product = {...productDetails};
 
         let formData = new FormData();
         formData.append('product',image);
